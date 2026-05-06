@@ -1,0 +1,67 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Sobre</title>
+    <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+    <div class="topnav" id="myTopnav">
+        <a href="dashboard.html">Página Inicial</a>
+        <a href="employee.html">Funcionários</a>
+        <a href="sobre.html">Sobre Nós</a>
+        <a href="comentarios.html">Comentários</a>
+        <a href="logout.html">Sair</a>
+        <a href="javascript:void(0);" class="icon" onclick="menu()">
+            <i class="fa fa-bars"></i>
+        </a>
+    </div>
+
+    <main class="geral">
+        <section>
+            <h1>Entre em contato conosco:</h1>
+            <form id="formComentarios">
+                <label for="commentsNome">Digite seu Nome: </label>
+                <input type="text" id="nome" required />
+                <textarea id="comentario" placeholder="Comente!" required></textarea>
+
+
+                <button type="submit">Enviar</button>
+            </form>
+        </section>
+
+    </main>
+    <script>
+        function addComentarios(event) {
+            event.preventDefault();
+
+            const nome = document.getElementById('nome').value;
+            const comentario = document.getElementById('comentario').value;
+
+
+            const newComentario = {
+                Nome: nome,
+                Comentario: comentario
+            };
+
+            fetch('https://localhost:7200/Comentarios', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(newComentario)
+            })
+                .then(response => {
+                    if (response.ok) {
+                        document.getElementById('nome').value = '';
+                        document.getElementById('comentario').value = '';
+                    }
+                });
+
+        }
+        document.getElementById('formComentarios')
+            .addEventListener('submit', addComentarios);
+    </script>
+    <script src="app.js"></script>
+</body>
+</html>

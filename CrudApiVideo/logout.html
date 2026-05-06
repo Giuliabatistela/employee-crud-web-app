@@ -1,0 +1,23 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Sair</title>
+    <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+    <div class="geral">
+        <h1>Tem certeza que deja sair?</h1>
+        <button onclick="logout()">Sair</button>
+        <a href="dashboard.html">Não</a>
+    </div>
+</body>
+</html>
+
+<script>
+    function logout() {
+        localStorage.setItem('authenticated', 'false'); // Remove a autenticação do localStorage
+        window.location.href = 'login.html'; // Redireciona para a página de login
+    }
+</script>
+<script src="app.js"></script>

@@ -1,0 +1,80 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Comentários</title>
+    <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+    <div class="topnav" id="myTopnav">
+        <a href="dashboard.html">Página Inicial</a>
+        <a href="employee.html">Funcionários</a>
+        <a href="sobre.html">Sobre Nós</a>
+        <a href="comentarios.html">Comentários</a>
+        <a href="logout.html">Sair</a>
+        <a href="javascript:void(0);" class="icon" onclick="menu()">
+            <i class="fa fa-bars"></i>
+        </a>
+    </div>
+
+    <main class="geral">
+        <section>
+            <h1>Comentários:</h1>
+            <ul class="lista-comentarios" id="lista-comentarios">
+                <!--<li class="comentario-item">
+                    <div class="comentario-topo">
+                        <span class="comentario-nome"></span>
+                        <span class="comentario-data"></span>
+                    </div>
+
+                    <p class="comentario-texto">
+
+                    </p>
+                </li>-->
+            </ul>
+        </section>
+
+    </main>
+    <script>
+        function getComentarios() {
+            fetch('https://localhost:7200/Comentarios')
+                .then(response => response.json())
+                .then(data => {
+                    const listacomentarios = document.getElementById('lista-comentarios');
+                    listacomentarios.innerHTML = '';
+
+
+                    data.forEach(comentario => {
+                        const row = document.createElement('li');
+                        row.classList.add("comentario-item");
+
+                        const div = document.createElement('div');
+                        div.classList.add("comentario-topo");
+                        row.appendChild(div);
+
+                        const spanNome = document.createElement('span');
+                        spanNome.classList.add("comentario-nome");
+                        spanNome.textContent = comentario.nome;
+                        div.appendChild(spanNome);
+
+                        const spanData = document.createElement('span');
+                        spanData.classList.add("comentario-data");
+                        spanData.textContent = comentario.dataHora;
+                        div.appendChild(spanData);
+
+                        const parCom = document.createElement('p');
+                        parCom.classList.add("comentario-texto");
+                        parCom.textContent = comentario.comentario;
+                        row.appendChild(parCom);
+
+                        listacomentarios.appendChild(row);
+                    });
+
+
+                });
+        }
+        getComentarios()
+    </script>
+    <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,52 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Login Page</title>
+    <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+    <div class="geral">
+        <h2>Login</h2>
+        <input type="text" id="username" placeholder="Usuário" />
+        <input type="password" id="password" placeholder="Senha" />
+        <button onclick="login()">Entrar</button>
+    </div>
+</body>
+
+</html>
+<script>
+    function login() {
+        const username = document.getElementById('username').value;
+        const password = document.getElementById('password').value;
+
+        const login = {
+            CPF: username,
+            Senha: password
+        };
+
+        //Enviar os dados de login para o servidor
+        fetch('https://localhost:7200/Login', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(login)
+        })
+
+            .then(response => response.json())
+            .then(data => {
+                if (data) {
+                    localStorage.setItem('authenticated', 'true');
+                    window.location.href = 'dashboard.html'; //Redirecionar para a página de dashboard
+                } else {
+                    // Login falhou, exibir mensagem de erro
+                    alert('Login falhou. Verifique suas credenciais e tente novamente.');
+                }
+            })
+            .catch(error => {
+                console.error('Erro:', error);
+                // alert('Ocorreu um erro ao tentar fazer login. Por favor, tente novamente mais tarde.');
+            });
+    }
+</script>
